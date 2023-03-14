@@ -1,15 +1,15 @@
-const express = require('express')
+const express = require("express");
+const morgan = require("morgan");
 
-const app = express()
+const userRouter = require("./routes/userRoutes");
 
-app.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'Hello from the server side',
-    app: 'Budgety',
-  });
-})
+const app = express();
 
-const port = 3000
+app.use(morgan("dev"));
+
+app.use("/api/v1/users", userRouter);
+
+const port = 3000;
 app.listen(port, () => {
-  console.log(`App running on port ${port}`)
-})
+  console.log(`App running on port ${port}`);
+});
