@@ -4,7 +4,8 @@ exports.getAllExpenses = async (req, res) => {
   try {
     const queryObj = { ...req.query };
 
-    if (queryObj.tags) queryObj.tags = { $all: queryObj.tags.split("-") };
+    if (queryObj.tags)
+      queryObj.tags = { $in: queryObj.tags.replace(/_/, " ").split("-") };
 
     const excludedFields = ["page", "sort", "limit", "fields"];
     excludedFields.forEach((field) => delete queryObj[field]);
