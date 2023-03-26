@@ -18,9 +18,14 @@ const expenseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  tags: {
-    type: [String],
-  },
+  tags: [
+    {
+      type: String,
+      lowercase: true,
+      trim: true,
+      match: [/^[a-z| ]{1,20}$/, "Invalid characters"],
+    },
+  ],
   // TODO accept images
 });
 
