@@ -67,6 +67,7 @@ exports.updateExpense = async (req, res) => {
     // new: true means that expense is the doc after update
     const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true,
     });
 
     res.status(200).json({
