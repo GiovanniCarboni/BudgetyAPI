@@ -96,3 +96,16 @@ exports.restrictTo =
         new AppError("You do not have permission to perform this action", 403)
       );
   };
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError("There is no user with that email address.", 404));
+  }
+
+  const resetToken = user.createPasswordResetToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  // TODO send token by email
+});
